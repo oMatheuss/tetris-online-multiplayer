@@ -1,6 +1,6 @@
 # tetris-online
 
-<h3>Projeto Final de Linguagens p/ Internet<h3>
+<h3>Projeto Final de Linguagens p/ Internet</h3>
 
 Aluno: Matheus Silva Moura - 5152442
 
