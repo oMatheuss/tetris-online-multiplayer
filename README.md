@@ -9,7 +9,7 @@ Professora: Luciene Chagas de Oliveira
 <b>OBs:</b>
 Para rodar o projeto é necessario ter o <a href="https://nodejs.org/en/" target="_blank" rel="noopener noreferrer">node.js/npm</a> instalado na maquina juntamente com <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">mysql8</a><br />
 
-Para rodar o projeto, primeiro instale as bibliotecas:br />
+Para rodar o projeto, primeiro instale as bibliotecas:
 
 Vá pasta do projeto no CMD: <code>cd C:\caminho\para\pasta</code><br />
 Pelo cmd na pasta do projeto digite: <code>npm install</code>
