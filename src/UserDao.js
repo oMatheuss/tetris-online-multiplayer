@@ -55,8 +55,8 @@ module.exports = {
 			const result = await connection.query("select points from tb_usuarios where id = " + id);
 			if (0 == result[0][0].points) {
 				return;
-			} else if ((result[0][0].points - points) < 0) {
-				await connection.execute("update tb_usuarios set points = points + "+result[0][0].points+" where id = " + id);
+			} else if ((result[0][0].points - points) <= 0) {
+				await connection.execute("update tb_usuarios set points = points - "+result[0][0].points+" where id = " + id);
 			}
 		}
 		
