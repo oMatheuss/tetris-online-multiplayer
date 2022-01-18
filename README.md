@@ -13,7 +13,7 @@ Professora: Luciene Chagas de Oliveira
   <li><b>socket.io</b> (biblioteca web para comunicação em tempo real);</li>
   <li><b>jwt</b> (token para gerenciamento de login/logout);</li>
   <li><b>mysql</b> (banco de dados).</li>
-  <li>html, css e javascript (construção de paginas)</li>
+  <li><b>html, css e javascript</b> (construção de paginas)</li>
 </ol>
 
 <h2>Instruçoes para rodar o projeto:</h2>
