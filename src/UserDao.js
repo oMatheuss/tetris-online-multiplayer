@@ -50,7 +50,7 @@ module.exports = {
 			host: hst,
 			database: db
 		});
-		const result = await connection.query("select R.points, R.rank from (select id, points, rank() over w as 'rank' from tb_usuarios WINDOW w as (order by points desc)) as R where R.id= "+id);
+		const result = await connection.query("select R.points, R.rank from (select id, points, @rank := @rank  + 1 as 'rank' from tb_usuarios, (select @rank := 0) a order by points desc) as R where R.id="+id);
 		connection.end();
 		return result[0][0];
 	},
