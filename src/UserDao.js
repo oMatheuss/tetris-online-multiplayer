@@ -11,7 +11,7 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			hostname: hst,
+			host: hst,
 			database: db
 		});
 		const result = await connection.query("select * from tb_usuarios where nickname like '" + nick + "'");
@@ -23,7 +23,7 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			hostname: hst,
+			host: hst,
 			database: db
 		});
 		const result = await connection.query("select * from tb_usuarios where id = " + id);
@@ -35,7 +35,7 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			hostname: hst,
+			host: hst,
 			database: db
 		});
 		const result = await connection.query("select nickname, points from tb_usuarios order by points desc limit 10");
@@ -47,7 +47,7 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			hostname: hst,
+			host: hst,
 			database: db
 		});
 		const result = await connection.query("select R.points, R.rank from (select id, points, rank() over w as 'rank' from tb_usuarios WINDOW w as (order by points desc)) as R where R.id= "+id);
@@ -59,7 +59,7 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			hostname: hst,
+			host: hst,
 			database: db
 		});
 		if (points < 0) {
@@ -79,7 +79,7 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			hostname: hst,
+			host: hst,
 			database: db
 		});
 		await connection.execute("insert into tb_usuarios (nickname, password) values ('"+nick+"','"+passwd+"')");
@@ -90,7 +90,7 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			hostname: hst,
+			host: hst,
 			database: db
 		});
 		await connection.execute("delete from tb_usuarios where id = " + id);
