@@ -1,14 +1,18 @@
 const mysql = require('mysql2/promise');
 //mysql usuario e senha
-const usr = 'default';
-const pwd = '123';
+
+const usr = process.env.CLEARDB_DATABASE_URL.split("/")[2].split(":")[0];
+const [pwd, hst] = process.env.CLEARDB_DATABASE_URL.split("/")[2].split(":")[1].split("@");
+const db = process.env.CLEARDB_DATABASE_URL.split("/")[3].split("?")[0];
+console.log(usr, pwd, hst, db);
 
 module.exports = {
 	async searchByNickname(nick) {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			database: 'db_projetofinal'
+			hostname: hst,
+			database: db
 		});
 		const result = await connection.query("select * from tb_usuarios where nickname like '" + nick + "'");
 		connection.end();
@@ -19,7 +23,8 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			database: 'db_projetofinal'
+			hostname: hst,
+			database: db
 		});
 		const result = await connection.query("select * from tb_usuarios where id = " + id);
 		connection.end();
@@ -30,7 +35,8 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			database: 'db_projetofinal'
+			hostname: hst,
+			database: db
 		});
 		const result = await connection.query("select nickname, points from tb_usuarios order by points desc limit 10");
 		connection.end();
@@ -41,7 +47,8 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			database: 'db_projetofinal'
+			hostname: hst,
+			database: db
 		});
 		const result = await connection.query("select R.points, R.rank from (select id, points, rank() over w as 'rank' from tb_usuarios WINDOW w as (order by points desc)) as R where R.id= "+id);
 		connection.end();
@@ -52,7 +59,8 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			database: 'db_projetofinal'
+			hostname: hst,
+			database: db
 		});
 		if (points < 0) {
 			const result = await connection.query("select points from tb_usuarios where id = " + id);
@@ -71,7 +79,8 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			database: 'db_projetofinal'
+			hostname: hst,
+			database: db
 		});
 		await connection.execute("insert into tb_usuarios (nickname, password) values ('"+nick+"','"+passwd+"')");
 		connection.end();
@@ -81,7 +90,8 @@ module.exports = {
 		var connection = await mysql.createConnection({
 			user: usr,
 			password: pwd,
-			database: 'db_projetofinal'
+			hostname: hst,
+			database: db
 		});
 		await connection.execute("delete from tb_usuarios where id = " + id);
 		connection.end();
