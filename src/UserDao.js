@@ -1,10 +1,13 @@
 const mysql = require('mysql2/promise');
+//mysql usuario e senha
+const usr = 'default';
+const pwd = '123';
 
 module.exports = {
 	async searchByNickname(nick) {
 		var connection = await mysql.createConnection({
-			user: 'root',
-			password: 'root',
+			user: usr,
+			password: pwd,
 			database: 'db_projetofinal'
 		});
 		const result = await connection.query("select * from tb_usuarios where nickname like '" + nick + "'");
@@ -14,8 +17,8 @@ module.exports = {
 
 	async searchById(id) {
 		var connection = await mysql.createConnection({
-			user: 'root',
-			password: 'root',
+			user: usr,
+			password: pwd,
 			database: 'db_projetofinal'
 		});
 		const result = await connection.query("select * from tb_usuarios where id = " + id);
@@ -25,8 +28,8 @@ module.exports = {
 
 	async getTop10() {
 		var connection = await mysql.createConnection({
-			user: 'root',
-			password: 'root',
+			user: usr,
+			password: pwd,
 			database: 'db_projetofinal'
 		});
 		const result = await connection.query("select nickname, points from tb_usuarios order by points desc limit 10");
@@ -36,8 +39,8 @@ module.exports = {
 
 	async getUserPointsAndRank(id) {
 		var connection = await mysql.createConnection({
-			user: 'root',
-			password: 'root',
+			user: usr,
+			password: pwd,
 			database: 'db_projetofinal'
 		});
 		const result = await connection.query("select R.points, R.rank from (select id, points, rank() over w as 'rank' from tb_usuarios WINDOW w as (order by points desc)) as R where R.id= "+id);
@@ -47,8 +50,8 @@ module.exports = {
 
 	async addToUserPoints(id, points) {
 		var connection = await mysql.createConnection({
-			user: 'root',
-			password: 'root',
+			user: usr,
+			password: pwd,
 			database: 'db_projetofinal'
 		});
 		if (points < 0) {
@@ -64,20 +67,20 @@ module.exports = {
 		connection.end();
 	},
 
-	async registerUser(nick, pwd) {
+	async registerUser(nick, passwd) {
 		var connection = await mysql.createConnection({
-			user: 'root',
-			password: 'root',
+			user: usr,
+			password: pwd,
 			database: 'db_projetofinal'
 		});
-		await connection.execute("insert into tb_usuarios (nickname, password) values ('"+nick+"','"+pwd+"')");
+		await connection.execute("insert into tb_usuarios (nickname, password) values ('"+nick+"','"+passwd+"')");
 		connection.end();
 	},
 	
 	async deleteUser(id) {
 		var connection = await mysql.createConnection({
-			user: 'root',
-			password: 'root',
+			user: usr,
+			password: pwd,
 			database: 'db_projetofinal'
 		});
 		await connection.execute("delete from tb_usuarios where id = " + id);
