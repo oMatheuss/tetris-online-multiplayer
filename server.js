@@ -9,7 +9,7 @@ const dao = require("./src/UserDao");
 const app = express();
 
 const port = 8081;
-const server = app.listen(port, () => {
+const server = app.listen(process.env.PORT || port, () => {
 	console.log("listening on port 8081!");
 });
 
