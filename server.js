@@ -43,7 +43,7 @@ app.get('/', async function(request, response) {
 			return response.status(200).render("index.ejs", {top10: t10, user: decoded});
 			
 		} catch(err) {
-			//console.log(err);
+			console.log(err);
 			return response.status(403).cookie("token", token, {maxAge: 0}).render("index.ejs", {top10: t10});
 		}
 	} else {
