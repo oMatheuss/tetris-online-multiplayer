@@ -2,13 +2,12 @@ window.addEventListener("load", function() {
 	
 	canvasH = screen.width > screen.height ? screen.height - screen.height * 0.25 : screen.width - screen.width * 0.25;
 	
-	//width: 750, height: 1000
 	var Q = window.Q = Quintus({ development: true })
 		  .include("Sprites, Scenes, Input, 2D, Touch, UI")
 		  .setup({width: screen.width, height: screen.height - screen.height * 0.25, maximaze: "touch", scaleToFit: true }).touch();
 	
 	Q.input.touchControls({
-	  controls:  [ ['left','←' ], ['down','↓' ], ['right','→' ], [], ['action','⥁'], ['fire', '↓↓' ]]
+		controls:  [ ['left','←' ], ['down','↓' ], ['right','→' ], [], ['action','⥁'], ['fire', '↓↓' ]]
 	});
 	
 	var started = false;

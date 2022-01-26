@@ -1,17 +1,17 @@
 function getCookie(cname) {
-  let name = cname + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
+	let name = cname + "=";
+  	let decodedCookie = decodeURIComponent(document.cookie);
+ 	let ca = decodedCookie.split(';');
+ 	for(let i = 0; i <ca.length; i++) {
+ 		let c = ca[i];
+    	while (c.charAt(0) == ' ') {
+      		c = c.substring(1);
+    	}
+    	if (c.indexOf(name) == 0) {
+      		return c.substring(name.length, c.length);
+    	}
+  	}
+  	return "";
 }
 
 // 1. Wait for the onload even
@@ -25,15 +25,16 @@ window.addEventListener("load", function() {
 	var player1 = "";
 	var player2 = "";
 	
-	//width: 750, height: 1000
+	canvasH = screen.width > screen.height ? screen.height - screen.height * 0.25 : screen.width - screen.width * 0.25;
+	
 	var Q = window.Q = Quintus({ development: true })
 		  .include("Sprites, Scenes, Input, 2D, Touch, UI")
-		  .setup({ width: 750, height: 600, maximize: "touch", scaleToFit: true }).touch();
+		  .setup({width: screen.width, height: screen.height - screen.height * 0.25, maximaze: "touch", scaleToFit: true }).touch();
 	
 	
 	//define botoes
 	Q.input.touchControls({
-	  controls:  [ ['left','←' ], ['down','↓' ], ['right','→' ], [], ['action','⥁'], ['fire', '↓↓' ]]
+		controls:  [ ['left','←' ], ['down','↓' ], ['right','→' ], [], ['action','⥁'], ['fire', '↓↓' ]]
 	});
 	
 	var started = false;
@@ -45,7 +46,7 @@ window.addEventListener("load", function() {
 	Q.gravityX = 0;
 	Q.gravityY = 0;
 
-	gridScreenSize = { w: 300, h: 600 };
+	gridScreenSize = { w: canvasH / 2, h: canvasH };
 	gridSize = { w: 10, h: 20 };
 	pieceSize = { w: gridScreenSize.w/gridSize.w, h: gridScreenSize.h/gridSize.h };
 	
