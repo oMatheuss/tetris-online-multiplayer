@@ -16,6 +16,8 @@ Professora: Luciene Chagas de Oliveira
   <li><b>html, css e javascript</b> (construção de paginas)</li>
 </ol>
 
+<h2>Link para pagina do jogo: <a href="https://tetris-online-multiplayer.herokuapp.com/" target="_blank" rel="noopener noreferrer">tetris-online</a>.</h2>
+
 <h2>Instruçoes para rodar o projeto:</h2>
 
 <b>Obs:</b>
