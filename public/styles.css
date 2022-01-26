@@ -1170,3 +1170,7 @@ button:disabled {
 
 @media only screen (orientation:portrait) and (hover: none) and (pointer: coarse) {
 }
+
+#quintus {
+	top: 0px !important;
+}
