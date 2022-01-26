@@ -4,40 +4,13 @@
         <meta charset="utf-8">
         <title>Tetris</title>
 		<link rel="stylesheet" type="text/css" href="/static/styles.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
 		<div class="titulo">TETRIS</div>
-		<div class="container">
+		<div class="flex-container">
 		
-			<div class="left">
-				<table>
-					<tr>
-						<th colspan="4" >TOP 10</th>
-					</tr>
-				<%
-					let i = 0;
-					top10.forEach((item) => {
-					i++;
-				%>
-					<tr>
-						<td><b>#<%= i %></b></td>
-						<td><%= item.nickname %></td>
-						<td style="text-align:right"><%= item.points %></td>
-						<td><img style="vertical-align:middle;" src="/static/trophy.png" width="32" height="32"></td>
-					</tr>
-				<% }); %>
-				</table>
-			</div>
-			
-			<div class="center" >
-				<br /><br /><br />
-				<button onclick="window.location.href='/treino'" >Partida Rapida</button><br />
-				<% if (typeof user !== "undefined") { %>
-				<button onclick="window.location.href='/jogar'" >Ranqueada</button>
-				<% } %>
-			</div>
-			
-			<div class="right">
+            <div class="flex-item-right">
 			<% if (typeof user === "undefined") { %>
 				<form id="login" >
 					<label for="nickname">nickname: </label>
@@ -56,6 +29,33 @@
 				<button onclick="window.location.href='/logout'" >Logout</button>
 				<button onclick="window.location.href='/deleteUser'" >Deletar Conta</button>
 			<% } %>
+			</div>
+                    
+            <div class="flex-item-center" >
+				<button onclick="window.location.href='/treino'" >Partida Rapida</button><br />
+				<% if (typeof user !== "undefined") { %>
+				<button onclick="window.location.href='/jogar'" >Ranqueada</button>
+				<% } %>
+			</div>
+            
+            <div class="flex-item-left">
+				<table class="top10">
+					<tr>
+						<th colspan="4" >TOP 10</th>
+					</tr>
+				<%
+					let i = 0;
+					top10.forEach((item) => {
+					i++;
+				%>
+					<tr>
+						<td><b>#<%= i %></b></td>
+						<td><%= item.nickname %></td>
+						<td style="text-align:right"><%= item.points %></td>
+						<td><img style="vertical-align:middle;" src="/static/trophy.png" width="32" height="32"></td>
+					</tr>
+				<% }); %>
+				</table>
 			</div>
 
 		</div>

@@ -926,7 +926,7 @@ select::-ms-expand {
 
 label {
   font-weight: 600;
-  max-width: 100%;
+  max-width: fit-content;
   display: block;
   margin: 1rem 0 0.5rem;
 }
@@ -1028,30 +1028,124 @@ caption {
 .titulo {
 	text-align: center;
 	font-family: tetrisFont;
+	color: rgb(255, 72, 0);
 	font-size: 96px;
 	margin-bottom: 25px;
+	background-image: url(/static/tetris-img.png);
+	background-color: cadetblue;
+	border-bottom: 3px solid black;
+	
+	-webkit-animation-direction: normal;
+	-webkit-animation-duration: 5s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-name: cores;
+	-webkit-animation-timing-function: ease;
 }
 
-.right {
-	float: right;
-	width: 25%;
+@-webkit-keyframes cores {
+     0% {color: rgb(110, 25, 15);}
+    25% {color: rgb(90, 201, 16);}
+    50% {color: rgb(43, 231, 252);}
+    75% {color: rgb(219, 73, 57);}
+    100% {color: rgb(3, 76, 84);}
+}
+
+.flex-container {
+ 	display: flex;
+  	flex-wrap: wrap;
 	font-size: 14px;
 	font-family: sans serif, Courier;
+	margin: 10px 10px 10px 10px;
 }
 
-.left {
-	float: left;
-	width: 25%;
-	font-size: 14px;
-	font-family: sans serif, Courier;
+.flex-item-left {
+	order: 1;
+	flex: 37.5%;
+}
+.flex-item-right {
+	order: 3;
+	flex: 37.5%;
+}
+.flex-item-center {
+	order: 2;
+	flex: 25%;
 }
 
-.center {
-	float: left;
-	text-align: center;
-	width: 50%;
-	font-size: 11px;
-	font-family: sans serif, Courier;
+.flex-item-right input {
+	width: 100%;
+}
+
+.top10 {
+	font-family: Arial, Helvetica, sans-serif;
+  	border-collapse: collapse;
+ 	width: auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.top10 td, .top10 th {
+  padding: 8px;
+}
+
+.top10 tr:nth-child(even){background-color: #f2f2f2;}
+
+.top10 tr:hover {background-color: #ddd;}
+
+.top10 th {
+  	padding-top: 12px;
+  	padding-bottom: 12px;
+  	text-align: left;
+  	background-color: #04AA6D;
+  	color: white;
+}
+
+
+@media (orientation:portrait) {
+	.titulo {
+		font-size: 10vw;
+		margin-left: auto;
+		margin-right: auto;
+	}
+  	.flex-container {
+    	flex-direction: column;
+  	}
+	.flex-item-left .flex-item-right .flex-item-center {
+		flex: 100%;
+	}
+	.flex-item-center {
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 2rem;
+		order: 1;
+	}
+	.flex-item-center button {
+		width: auto;
+		font-size: x-large;
+	}
+	.flex-item-right {
+		order: 2;
+		flex: 100%;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 1rem;
+	}
+	.flex-item-right input, button {
+		width: 100%;
+		font-size: x-large;
+	}
+	.flex-item-right form {
+		margin-left: auto;
+		margin-right: auto;
+		font-size: x-large;
+	}
+	.flex-item-left {
+		order: 3;
+		flex: 100%;
+	}
+	.flex-container {
+		font-size: x-large;
+	}
 }
 
 button:disabled {
@@ -1059,21 +1153,20 @@ button:disabled {
 }
 
 .menu {
-	position: fixed;
-	top: 0;
+	z-index: 1;
 	width: 100%;
-	transition: top 0.3s;
 	font-size: 30px;
 	background-color: black;
-	color: white;
-	z-index: 10;
 }
 
 .menuComp {
-	display: block;
-	float: left;
+	display: inline-block;
 	color: white;
 	font-variant: all-petite-caps;
 	text-decoration: none;
 	padding: 0px 10px 0px 10px;
+}
+
+
+@media only screen (orientation:portrait) and (hover: none) and (pointer: coarse) {
 }

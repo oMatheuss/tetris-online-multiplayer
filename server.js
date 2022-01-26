@@ -20,10 +20,10 @@ const io = socketio(server);
 const jwtSecret = "JWT_$3cr3t_tetris";
 
 
-
 //endpoints
 
 app.use('/static', express.static(__dirname + '/public'));
+app.use('/favicon.ico', express.static(__dirname + '/public/favicon.ico'));
 app.set("view engine", "ejs");
 
 app.use(cookieParser());
