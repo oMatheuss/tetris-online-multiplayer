@@ -4,7 +4,7 @@
   "description": "Tetris online",
   "main": "server.js",
   "scripts": {
-    "minify": "npx uglifyjs src/solo-game_dev.js --compress --mangle --warn --output public/solo-game.js && npx uglifyjs src/game_dev.js --compress --mangle --warn --output public/game.js",
+    "minify": "uglifyjs src/solo-game_dev.js --compress --mangle --output public/solo-game.js && uglifyjs src/game_dev.js --compress --mangle --output public/game.js",
     "start": "npm run minify && node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
