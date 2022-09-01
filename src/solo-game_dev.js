@@ -4,7 +4,7 @@ window.addEventListener("load", function() {
 	
 	var Q = window.Q = Quintus({ development: true })
 		  .include("Sprites, Scenes, Input, 2D, Touch, UI")
-		  .setup({width: screen.width, height: screen.height - screen.height * 0.25, maximaze: "touch", scaleToFit: true }).touch();
+		  .setup({width: screen.width, height: screen.height - screen.height * 0.25, maximaze: "touch", scaleToFit: false }).touch();
 	
 	Q.input.touchControls({
 		controls:  [ ['left','←' ], ['down','↓' ], ['right','→' ], [], ['action','⥁'], ['fire', '↓↓' ]]

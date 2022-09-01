@@ -1,42 +1,53 @@
-const express = require('express');
-const socketio = require('socket.io');
-const jwt = require('jsonwebtoken');
-const socketioJwt = require('socketio-jwt');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const dao = require("./src/UserDao");
+import 'dotenv/config';
+import express from 'express';
+import { Server } from "socket.io";
+import jwt from 'jsonwebtoken';
+const { verify, sign } = jwt;
+import { authorize } from 'socketio-jwt';
+import bp from 'body-parser';
+const { json } = bp;
+import cookieParser from 'cookie-parser';
+import { 
+	getTop10, 
+	getUserPointsAndRank, 
+	searchByNickname, 
+	deleteUser, 
+	registerUser, 
+	addToUserPoints 
+} from "./src/UserDao.js";
+
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
-const port = 8081;
+const port = process.env.PORT || 80;
+const jwtSecret = process.env.JWT_SECRET;
+
 const server = app.listen(port, () => {
-	console.log("listening on port 8081!");
+	console.log(`listening on port ${port}!`);
 });
-
-app.use(bodyParser.json());
-
-const io = socketio(server);
-
-const jwtSecret = "JWT_$3cr3t_tetris";
-
+const io = new Server(server);
 
 //endpoints
-
 app.use('/static', express.static(__dirname + '/public'));
 app.use('/favicon.ico', express.static(__dirname + '/public/favicon.ico'));
 app.set("view engine", "ejs");
 
+app.use(json());
 app.use(cookieParser());
 
 app.get('/', async function(request, response) {
 	var token = request.cookies.token;
 	
-	var t10 = await dao.getTop10();
+	var t10 = await getTop10();
 	
 	if (typeof token !== "undefined") {
 		try {
-			var decoded = jwt.verify(token, jwtSecret);
-			var p = await dao.getUserPointsAndRank(decoded.id);
+			var decoded = verify(token, jwtSecret);
+			var p = await getUserPointsAndRank(decoded.id);
 			decoded['points'] = p.points;
 			decoded['rank'] = p.rank;
 			
@@ -58,7 +69,7 @@ app.post('/login', async function(request, response) {
 	
 	var profile = { id: 0, nickname: '' };
 	
-	var result = await dao.searchByNickname(nick);
+	var result = await searchByNickname(nick);
 	
 	if (result.length == 0 || typeof result === "undefined") {
 		return response.status(403).send({
@@ -75,7 +86,7 @@ app.post('/login', async function(request, response) {
 		}
 	}
 	// mandando de volta o token
-	var token = jwt.sign(profile, jwtSecret, { expiresIn: 60*30 });
+	var token = sign(profile, jwtSecret, { expiresIn: 60*30 });
 
 	return response.cookie("token", token).sendStatus(200);
 });
@@ -94,8 +105,8 @@ app.get('/deleteUser', async function(request, response) {
 	
 	if (typeof token !== "undefined") {
 		try {
-			var decoded = jwt.verify(token, jwtSecret);
-			await dao.deleteUser(decoded.id);
+			var decoded = verify(token, jwtSecret);
+			await deleteUser(decoded.id);
 			return response.status(200).cookie("token", token, {maxAge: 0}).redirect("/");
 			
 		} catch(err) {
@@ -128,17 +139,17 @@ app.post('/register', async function(request, response) {
 		});
 	}
 	
-	var result = await dao.searchByNickname(nick);
+	var result = await searchByNickname(nick);
 	
 	if (result.length == 0) {
-		await dao.registerUser(nick, pwd);
+		await registerUser(nick, pwd);
 		
-		var result = await dao.searchByNickname(nick);
+		var result = await searchByNickname(nick);
 		var profile = {
 			nickname: result[0]["nickname"],
 			id: result[0]["id"]
 		};
-		var token = jwt.sign(profile, jwtSecret, { expiresIn: 60*30 });
+		var token = sign(profile, jwtSecret, { expiresIn: 60*30 });
 
 		return response.cookie("token", token).sendStatus(200);
 	}
@@ -154,7 +165,7 @@ app.get('/jogar', async function(request, response) {
 	
 	if (typeof token !== "undefined") {
 		try {
-			var decoded = jwt.verify(token, jwtSecret);
+			var decoded = verify(token, jwtSecret);
 			return response.status(200).render("game.ejs", {user: decoded});
 		} catch(err) {
 			return response.status(400).cookie("token", token, {maxAge: 0}).redirect("/");
@@ -171,7 +182,7 @@ app.get('/treino', function(request, response) {
 
 //websocket connection
 
-io.of("/jogar").use(socketioJwt.authorize({
+io.of("/jogar").use(authorize({
 	secret: jwtSecret,
 	handshake: true
 }));
@@ -284,15 +295,15 @@ io.of("/jogar").on('connection', (socket) => {
 			
 			if (matches[room].player1.lost && matches[room].player2.lost) {
 				if (matches[room].player1.score > matches[room].player2.score) {
-					dao.addToUserPoints(matches[room].player1.id, 30);
-					dao.addToUserPoints(matches[room].player2.id, -20);
+					addToUserPoints(matches[room].player1.id, 30);
+					addToUserPoints(matches[room].player2.id, -20);
 					matches[room].player1.socket.emit('end', 1);
 					matches[room].player2.socket.emit('end', -1);
 					
 					
 				} else if (matches[room].player1.score < matches[room].player2.score) {
-					dao.addToUserPoints(matches[room].player1.id, -20);
-					dao.addToUserPoints(matches[room].player2.id, 30);
+					addToUserPoints(matches[room].player1.id, -20);
+					addToUserPoints(matches[room].player2.id, 30);
 					matches[room].player1.socket.emit('end', -1);
 					matches[room].player2.socket.emit('end', 1);
 					

@@ -22,8 +22,6 @@ window.addEventListener("load", function() {
 	});
 	
 	var roomID = window.sessionStorage.getItem('roomID');
-	var player1 = "";
-	var player2 = "";
 	
 	canvasH = screen.width > screen.height ? screen.height - screen.height * 0.25 : screen.width - screen.width * 0.25;
 	
@@ -36,8 +34,6 @@ window.addEventListener("load", function() {
 	Q.input.touchControls({
 		controls:  [ ['left','←' ], ['down','↓' ], ['right','→' ], [], ['action','⥁'], ['fire', '↓↓' ]]
 	});
-	
-	var started = false;
 
 	Q.input.keyboardControls();
 

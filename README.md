@@ -1,10 +1,5 @@
 # tetris-online
 
-<h3>Projeto Final de Linguagens p/ Internet</h3>
-
-Aluno: Matheus Silva Moura - 5152442<br />
-Professora: Luciene Chagas de Oliveira
-
 <p>Projeto desenvolvido usando as tecnologias:</p>
 <ol>
   <li><b>node.js</b> (interpretador javascript);</li>
@@ -21,7 +16,7 @@ Professora: Luciene Chagas de Oliveira
 <h2>Instruçoes para rodar o projeto:</h2>
 
 <b>Obs:</b>
-È necessario ter o <a href="https://nodejs.org/en/" target="_blank" rel="noopener noreferrer">node.js/npm</a> instalado na maquina juntamente com <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">mysql8</a><br />
+É necessario ter o <a href="https://nodejs.org/en/" target="_blank" rel="noopener noreferrer">node.js/npm</a> instalado na maquina juntamente com <a href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">mysql8</a><br />
 
 Primeiro instale as bibliotecas:
 
