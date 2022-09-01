@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Tetris online",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "minify": "npx uglifyjs src/solo-game_dev.js --compress --mangle --warn --output public/solo-game.js && npx uglifyjs src/game_dev.js --compress --mangle --warn --output public/game.js",
     "start": "node server.js",
