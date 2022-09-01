@@ -23,16 +23,21 @@ window.addEventListener("load", function() {
 	
 	var roomID = window.sessionStorage.getItem('roomID');
 	
-	canvasH = screen.width > screen.height ? screen.height - screen.height * 0.25 : screen.width - screen.width * 0.25;
+	var portrait = this.innerHeight > this.innerWidth;
+	var canvasH = portrait ? this.innerHeight * 0.50 : this.innerHeight * 0.75;
 	
 	var Q = window.Q = Quintus({ development: true })
 		  .include("Sprites, Scenes, Input, 2D, Touch, UI")
-		  .setup({width: screen.width, height: screen.height - screen.height * 0.25, maximaze: "touch", scaleToFit: true }).touch();
-	
+		  .setup({width : this.innerWidth, height: this.innerHeight, scaleToFit: false })
+		  .touch();
 	
 	//define botoes
 	Q.input.touchControls({
-		controls:  [ ['left','←' ], ['down','↓' ], ['right','→' ], [], ['action','⥁'], ['fire', '↓↓' ]]
+		controls: portrait ?
+			[['left','←'], ['down','↓' ], ['right','→'], ['fire', '↓↓'], ['action','⥁']]
+			: [['left','←'],['down','↓'], ['right','→'], [], [], [], ['fire', '↓↓'], ['action','⥁']],
+		gutter: portrait ? 5 : 15,
+		bottom: portrait ? Q.height : Q.height * 1.05
 	});
 
 	Q.input.keyboardControls();
@@ -914,7 +919,7 @@ window.addEventListener("load", function() {
 			stage.insert(new Q.Grid(gridPos));
 			this.gameArray = this.createNewGameArray();
 			
-			this.queueA = new QueuePlayerAction(100);
+			this.queueA = new QueuePlayerAction(1000);
 			
 			socket.on("down", 	() => { this.queueA.write(1); });
 			socket.on("left", 	() => { this.queueA.write(2); });
@@ -993,7 +998,7 @@ window.addEventListener("load", function() {
 		
 		var end = false;
 		
-		var gridPos = {x: (-gridScreenSize.w-150)/2, y: 0};
+		var gridPos = {x: portrait ? (-gridScreenSize.w-75)/2 : (-gridScreenSize.w-150)/2, y: 0};
 		stage.insert(new Q.Controller(stage, gridPos, score, () => {
 			
 			var container = stage.insert(new Q.UI.Container({
@@ -1009,10 +1014,10 @@ window.addEventListener("load", function() {
 			socket.on("end", (result) => {
 				end = true;
 				if (result == 1) {
-					label.p.label = "Vitória! :)\n +30";
+					label.p.label = "Vitória! Você ANIQUILOU\n +30";
 					container.p.fill = "rgba(0, 71, 171, 0.7)";
 				} else if (result == -1) {
-					label.p.label = "Derrota! :'(\n -20";
+					label.p.label = "Derrota! Você foi ANIQUILADO\n -20";
 					container.p.fill = "rgba(227, 38, 54, 0.7)";
 				} else {
 					label.p.label = "\nEmpate! :/"
@@ -1028,7 +1033,7 @@ window.addEventListener("load", function() {
 			});
 		}));
 		
-		var gridPos2 = {x: (gridScreenSize.w+150)/2, y: 0};
+		var gridPos2 = {x: (gridScreenSize.w+100)/2, y: 0};
 		stage.insert(new Q.Controller2(stage, gridPos2));
 		
 		var scoreUi = stage.insert(new Q.UI.Text({x:gridPos.x, y: gridScreenSize.h/2+30, label: "Score: " + score.s }));

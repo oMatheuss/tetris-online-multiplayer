@@ -1,16 +1,19 @@
 window.addEventListener("load", function() {
 	
-	canvasH = screen.width > screen.height ? screen.height - screen.height * 0.25 : screen.width - screen.width * 0.25;
+	var portrait = this.innerHeight > this.innerWidth;
+	var canvasH = portrait ? this.innerHeight * 0.70 : this.innerHeight * 0.95;
 	
 	var Q = window.Q = Quintus({ development: true })
 		  .include("Sprites, Scenes, Input, 2D, Touch, UI")
-		  .setup({width: screen.width, height: screen.height - screen.height * 0.25, maximaze: "touch", scaleToFit: false }).touch();
+		  .setup({width : this.innerWidth, height: this.innerHeight, scaleToFit: false })
+		  .touch();
 	
 	Q.input.touchControls({
-		controls:  [ ['left','←' ], ['down','↓' ], ['right','→' ], [], ['action','⥁'], ['fire', '↓↓' ]]
+		controls: portrait ?
+			[['left','←'], ['down','↓' ], ['right','→'], ['fire', '↓↓'], ['action','⥁']]
+			: [['left','←'],['down','↓'], ['right','→'], [], [], [], ['fire', '↓↓'], ['action','⥁']],
+		gutter: portrait ? 5 : 15,
 	});
-	
-	var started = false;
 
 	Q.input.keyboardControls();
 

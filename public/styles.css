@@ -17,3 +17,7 @@
 	font-size: 48px;
 	color: #2e312d;
 }
+
+.hider {
+	overflow: hidden;
+}
